@@ -135,8 +135,8 @@ INSERT INTO products (category_id, name, description, price, stock, image, statu
 (5, 'Purified Mineral Water (500ml)', 'Pure drinking water in sealed bottle.', 20.00, 100, 'images/products/water.jpg', 'available');
 
 INSERT INTO users (name, email, password, role, phone, address) VALUES
-('BBQ Store Admin', 'admin@bbqhouse.com', '$2b$12$t4UvM0u787YmU34dZ7/e.e/V29qZ.5m4C4i3Yh9G.bQ3QjFhJ5l1S', 'admin', '0912-345-6789', 'Main Branch, BBQ House, Bohol'),
-('Juan Dela Cruz', 'customer@bbqhouse.com', '$2b$12$jQjX8o4q4qj1Qe4r6t8y9u0i1o2p3a4s5d6f7g8h9j0k1l2z3x4c5v', 'customer', '0998-765-4321', '123 Rizal Street, Tagbilaran City, Bohol');
+('BBQ Store Admin', 'admin@bbqhouse.com', '$2b$12$AFdMiuzovJ/oSNeJjLJhUOybO93du1EqsVjU9qpMuwJ9HZ4cvcgW.', 'admin', '0912-345-6789', 'Main Branch, BBQ House, Bohol'),
+('Juan Dela Cruz', 'customer@bbqhouse.com', '$2b$12$k3iOi698Kd1mPR/0A1DBqunQM1HW9fiN6dIgEFPA672P11fW9a5va', 'customer', '0998-765-4321', '123 Rizal Street, Tagbilaran City, Bohol');
 
 INSERT INTO orders (user_id, customer_name, customer_email, customer_phone, delivery_address, order_notes, total_amount, order_status, payment_method, payment_status) VALUES
 (2, 'Juan Dela Cruz', 'customer@bbqhouse.com', '0998-765-4321', '123 Rizal Street, Tagbilaran City, Bohol', 'Please include extra spicy BBQ sauce', 184.00, 'preparing', 'cash_on_delivery', 'pending');

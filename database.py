@@ -75,12 +75,30 @@ class DatabaseManager:
             if res is not None:
                 self.use_supabase = True
                 print("[DB] Connected to Supabase Cloud Database successfully!")
+                self.ensure_seed_users_valid()
                 return
         except Exception as e:
             err_msg = str(e)
             print(f"[DB] Supabase tables not yet created ({err_msg}). Operating on local SQLite store.")
             print("[DB] TIP: Run 'supabase_schema.sql' in your Supabase Dashboard SQL Editor to switch to cloud mode.")
             self.use_supabase = False
+
+    def ensure_seed_users_valid(self):
+        """Ensure demo accounts (admin and customer) always have working credentials."""
+        try:
+            admin_user = self.get_user_by_email("admin@bbqhouse.com")
+            if admin_user:
+                if not verify_password("admin123", admin_user.get("password", "")):
+                    self.update_user(admin_user["id"], {"password": "admin123"})
+                    print("[DB] Verified & refreshed admin@bbqhouse.com password.")
+
+            cust_user = self.get_user_by_email("customer@bbqhouse.com")
+            if cust_user:
+                if not verify_password("customer123", cust_user.get("password", "")):
+                    self.update_user(cust_user["id"], {"password": "customer123"})
+                    print("[DB] Verified & refreshed customer@bbqhouse.com password.")
+        except Exception as e:
+            pass
 
     def get_sqlite_conn(self):
         conn = sqlite3.connect(DB_FILE)
