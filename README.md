@@ -124,3 +124,31 @@ Use these pre-seeded accounts for testing:
 - `POST /api/auth/register` - Create customer or admin account
 - `POST /api/auth/login` - Authenticate user
 - `GET /api/customers` - Admin: List customer accounts
+
+
+---
+
+## 🚀 Deploying to Render (render.com)
+
+This repository is pre-configured with `render.yaml` and `Procfile` for 1-click deployment on Render.
+
+### Step-by-Step Render Deployment:
+
+1. **Sign in to Render**: Go to [render.com](https://render.com) and log in with your GitHub account.
+2. **Create New Web Service**:
+   - In the Render dashboard, click **New +** $\rightarrow$ **Web Service**.
+   - Connect your repository: `https://github.com/kinggzenooo-dot/BBQ-system.git`.
+3. **Configure Service**:
+   - **Name**: `bbq-online-store` (or any name you prefer)
+   - **Runtime**: `Python 3`
+   - **Build Command**: `pip install -r requirements.txt`
+   - **Start Command**: `uvicorn main:app --host 0.0.0.0 --port $PORT`
+   - **Plan**: `Free`
+4. **Environment Variables**:
+   Under **Environment Variables**, add:
+   - `SUPABASE_URL`: `https://jjqlesittpjaweoeiixy.supabase.co`
+   - `SUPABASE_KEY`: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...` (your anon key from `.env`)
+   - `SUPABASE_ANON_KEY`: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...`
+   - `SECRET_KEY`: `bbq-house-secret-key-2026`
+5. **Click "Deploy Web Service"**:
+   Render will automatically build and launch your single-link BBQ store live on the web at a public `.onrender.com` URL!
