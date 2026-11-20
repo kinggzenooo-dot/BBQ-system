@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BBQ House | Online BBQ Store & Live Ordering</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔥</text></svg>">
+</head>
+<body>
+
+<!-- =====================================================
+     NAVIGATION BAR (SINGLE LINK ACCESSIBLE)
+===================================================== -->
+<header class="navbar">
+    <div class="nav-container">
+        <a href="#home" onclick="switchView('home')" class="logo">
+            🔥 BBQ HOUSE
+        </a>
+
+        <nav class="nav-links">
+            <a href="#home" onclick="switchView('home')">Home</a>
+            <a href="#menu" onclick="switchView('menu')">Menu</a>
+            
+            <a href="javascript:void(0)" onclick="openCartDrawer()" style="cursor:pointer;">
+                🛒 Cart <span id="cartCountBadge" class="badge-count" style="display:none;">0</span>
+            </a>
+
+            <a href="#orders" onclick="switchView('orders')">Track Order</a>
+
+            <!-- Admin Nav Link -->
+            <a href="#admin" id="adminNavLink" onclick="switchView('admin')" class="admin-nav-link">
+                ⚙️ Admin
+            </a>
+
+            <!-- User Auth Container -->
+            <div id="navAuthContainer" style="display:inline-flex; align-items:center; gap:12px;">
+                <button onclick="openModal('authModal')" class="login-btn" style="border:none; cursor:pointer;">
+                    Login / Sign Up
+                </button>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<!-- =====================================================
+     VIEW 1: HOME PAGE
+===================================================== -->
+<main id="homeView">
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <p class="hero-small">🔥 FRESH FROM THE GRILL</p>
+                <h1>
+                    Delicious BBQ
+                    <br>
+                    <span>Made For You</span>
+                </h1>
+                <p>
+                    Enjoy freshly charcoal-grilled Filipino BBQ made with premium meats, 
+                    secret island marinades, and our signature sweet-savory basting sauce.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#menu" onclick="switchView('menu')" class="btn-primary">Order Now</a>
+                    <a href="#menu" onclick="switchView('menu')" class="btn-secondary">View Menu</a>
+                </div>
+            </div>
+
+            <div class="hero-image">
+                <img src="images/banner.jpg" alt="Delicious BBQ Feast" onerror="this.src='images/products/pork-bbq.jpg'">
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories">
+        <div class="section-title">
+            <p>WHAT WE SERVE</p>
+            <h2>Our BBQ Categories</h2>
+            <span>Choose your favorite grilled specialties.</span>
+        </div>
+
+        <div class="category-container">
+            <a href="#menu" onclick="setCategory(1); switchView('menu');" class="category-card">
+                <div class="category-icon">🍱</div>
+                <h3>BBQ Meals</h3>
+                <p>Complete combo BBQ meals with unlimited garlic rice.</p>
+            </a>
+
+            <a href="#menu" onclick="setCategory(2); switchView('menu');" class="category-card">
+                <div class="category-icon">🍢</div>
+                <h3>BBQ Skewers</h3>
+                <p>Classic marinated meat skewers grilled to tender perfection.</p>
+            </a>
+
+            <a href="#menu" onclick="setCategory(3); switchView('menu');" class="category-card">
+                <div class="category-icon">🍗</div>
+                <h3>Chicken BBQ</h3>
+                <p>Juicy chicken cuts basted with rich annatto glaze.</p>
+            </a>
+
+            <a href="#menu" onclick="setCategory(4); switchView('menu');" class="category-card">
+                <div class="category-icon">🥩</div>
+                <h3>Pork BBQ</h3>
+                <p>Authentic tender pork cuts with sweet caramelization.</p>
+            </a>
+        </div>
+    </section>
+
+    <!-- Popular Featured Section -->
+    <section class="featured">
+        <div class="section-title">
+            <p>OUR SPECIALS</p>
+            <h2>Popular BBQ Dishes</h2>
+            <span>Our customers' top-rated grilled favorites.</span>
+        </div>
+
+        <div id="featuredContainer" class="product-container">
+            <!-- Dynamically populated from backend -->
+        </div>
+
+        <div class="view-menu">
+            <a href="#menu" onclick="switchView('menu')" class="btn-primary">
+                View Full Menu →
+            </a>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="why-us">
+        <div class="section-title">
+            <p>WHY BBQ HOUSE?</p>
+            <h2>Grilled With Passion</h2>
+        </div>
+
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">🔥</div>
+                <h3>Freshly Grilled</h3>
+                <p>Every skewer is made fresh-to-order on real coconut charcoal.</p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">🥩</div>
+                <h3>Quality Meats</h3>
+                <p>Hand-trimmed premium cuts marinated for 24 hours.</p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">🚴</div>
+                <h3>Express Delivery</h3>
+                <p>Packed piping hot and delivered quickly right to your doorstep.</p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">❤️</div>
+                <h3>Family Recipe</h3>
+                <p>Generations of authentic taste loved by all BBQ fans.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to action -->
+    <section class="cta">
+        <div class="cta-content">
+            <h2>Craving for Hot & Sizzling BBQ?</h2>
+            <p>Treat yourself and your loved ones to an authentic grilled feast today!</p>
+            <a href="#menu" onclick="switchView('menu')" class="btn-primary">Order Now</a>
+        </div>
+    </section>
+</main>
+
+<!-- =====================================================
+     VIEW 2: FULL MENU VIEW
+===================================================== -->
+<main id="menuView" style="display:none; padding: 50px 5%; min-height: 80vh;">
+    <div style="max-width: 1250px; margin: 0 auto;">
+        <div class="section-title">
+            <p>SIZZLING CHOICES</p>
+            <h2>Our Full BBQ Menu</h2>
+            <span>Select items to customize your feast and order directly online.</span>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-wrapper">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="menuSearchInput" oninput="handleSearch(this.value)" class="search-input" placeholder="Search pork bbq, chicken, meals, drinks...">
+        </div>
+
+        <!-- Category Filters -->
+        <div id="categoryFilterTabs" class="filter-tabs">
+            <!-- Populated via loadCategories() -->
+        </div>
+
+        <!-- Products Grid -->
+        <div id="productsCatalogContainer" class="product-container" style="margin-top: 30px;">
+            <!-- Populated via loadProducts() -->
+        </div>
+    </div>
+</main>
+
+<!-- =====================================================
+     VIEW 3: ORDERS & LIVE TRACKING VIEW
+===================================================== -->
+<main id="ordersView" style="display:none; padding: 50px 5%; min-height: 80vh; background: #faf5f0;">
+    <div style="max-width: 900px; margin: 0 auto;">
+        <div class="section-title">
+            <p>REAL-TIME DELIVERY</p>
+            <h2>Order Tracking & History</h2>
+            <span>Monitor your sizzling BBQ from grill to your table in real time.</span>
+        </div>
+
+        <!-- Active Order Tracker -->
+        <div id="activeOrderTracker">
+            <!-- Active order card with stepper will be rendered here -->
+        </div>
+
+        <!-- Past Orders History -->
+        <div style="margin-top: 40px;">
+            <h3 style="font-size: 20px; font-weight: 800; color: #222; margin-bottom: 18px;">
+                📜 Order History
+            </h3>
+            <div id="ordersHistoryContainer">
+                <!-- Populated via loadAllOrders() -->
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- =====================================================
+     VIEW 4: ADMIN DASHBOARD (LIVE SYNC & CONTROL)
+===================================================== -->
+<main id="adminView" class="admin-view" style="display:none;">
+    <div class="admin-container">
+        <!-- DB Status Bar -->
+        <div id="dbStatusIndicator" class="db-status-bar">
+            <span>⚡ DB Mode: <strong>Checking connection...</strong></span>
+            <span>Supabase Sync Ready</span>
+        </div>
+
+        <div class="admin-header-row">
+            <div>
+                <h1 style="font-size: 28px; font-weight: 800; color: #222;">
+                    🔥 BBQ House Management Dashboard
+                </h1>
+                <p style="color: #666; font-size: 14px;">
+                    Manage real-time orders, menu items, inventory, and sync customer updates.
+                </p>
+            </div>
+            <div>
+                <button onclick="adminOpenAddProduct()" class="btn-primary" style="border:none; cursor:pointer;">
+                    + Add New Product
+                </button>
+            </div>
+        </div>
+
+        <!-- KPI Summary Cards -->
+        <div class="admin-kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-icon">💰</div>
+                <div>
+                    <div id="kpiRevenue" class="kpi-val">₱0.00</div>
+                    <div class="kpi-label">Total Revenue</div>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-icon">📦</div>
+                <div>
+                    <div id="kpiOrders" class="kpi-val">0</div>
+                    <div class="kpi-label">Total Orders</div>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-icon">👨‍🍳</div>
+                <div>
+                    <div id="kpiActive" class="kpi-val">0</div>
+                    <div class="kpi-label">Active / Pending</div>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-icon">🍢</div>
+                <div>
+                    <div id="kpiProducts" class="kpi-val">0</div>
+                    <div class="kpi-label">Menu Items</div>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-icon">👥</div>
+                <div>
+                    <div id="kpiCustomers" class="kpi-val">0</div>
+                    <div class="kpi-label">Registered Customers</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Navigation Tabs -->
+        <div class="admin-tabs">
+            <button id="tabBtn_orders" class="admin-tab-btn active" onclick="setAdminTab('orders')">
+                📦 Manage Orders
+            </button>
+            <button id="tabBtn_products" class="admin-tab-btn" onclick="setAdminTab('products')">
+                🍖 Manage Products
+            </button>
+            <button id="tabBtn_customers" class="admin-tab-btn" onclick="setAdminTab('customers')">
+                👥 Customer Accounts
+            </button>
+        </div>
+
+        <!-- Tab 1: Orders -->
+        <div id="adminSection_orders" class="admin-card">
+            <div class="admin-card-header">
+                <h3 style="font-size: 17px; font-weight: 800;">Customer Orders</h3>
+                <div style="display:flex; gap:8px;">
+                    <button onclick="adminLoadOrders('all')" class="filter-tab active" style="padding:6px 14px; font-size:12px;">All</button>
+                    <button onclick="adminLoadOrders('pending')" class="filter-tab" style="padding:6px 14px; font-size:12px;">Pending</button>
+                    <button onclick="adminLoadOrders('preparing')" class="filter-tab" style="padding:6px 14px; font-size:12px;">Grilling</button>
+                    <button onclick="adminLoadOrders('ready')" class="filter-tab" style="padding:6px 14px; font-size:12px;">Ready</button>
+                    <button onclick="adminLoadOrders('completed')" class="filter-tab" style="padding:6px 14px; font-size:12px;">Completed</button>
+                </div>
+            </div>
+            <div style="overflow-x:auto;">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer</th>
+                            <th>Items Summary</th>
+                            <th>Total Amount</th>
+                            <th>Status</th>
+                            <th>Payment</th>
+                            <th>Action (Sync Status)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminOrdersTableBody">
+                        <!-- Populated dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Tab 2: Products -->
+        <div id="adminSection_products" class="admin-card" style="display:none;">
+            <div class="admin-card-header">
+                <h3 style="font-size: 17px; font-weight: 800;">Menu Catalog & Stock</h3>
+                <button onclick="adminOpenAddProduct()" class="btn-primary" style="padding:8px 16px; font-size:13px; border:none; cursor:pointer;">
+                    + Add Product
+                </button>
+            </div>
+            <div style="overflow-x:auto;">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Product Info</th>
+                            <th>Price</th>
+                            <th>Stock</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminProductsTableBody">
+                        <!-- Populated dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Tab 3: Customers -->
+        <div id="adminSection_customers" class="admin-card" style="display:none;">
+            <div class="admin-card-header">
+                <h3 style="font-size: 17px; font-weight: 800;">Registered Customers</h3>
+            </div>
+            <div style="overflow-x:auto;">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Role</th>
+                            <th>Joined Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminCustomersTableBody">
+                        <!-- Populated dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- =====================================================
+     SLIDE-OUT CART DRAWER
+===================================================== -->
+<div id="cartDrawerOverlay" class="cart-drawer-overlay"></div>
+<aside id="cartDrawer" class="cart-drawer">
+    <div class="cart-drawer-header">
+        <h3>🛒 Your BBQ Order</h3>
+        <button onclick="closeCartDrawer()" class="modal-close">&times;</button>
+    </div>
+
+    <div id="cartItemsContainer" class="cart-items-list">
+        <!-- Rendered via renderCartDrawer() -->
+    </div>
+
+    <div class="cart-drawer-footer">
+        <div class="cart-summary-line">
+            <span>Subtotal:</span>
+            <span id="cartSubtotal">₱0.00</span>
+        </div>
+        <div class="cart-summary-line">
+            <span>Delivery Fee:</span>
+            <span>₱49.00</span>
+        </div>
+        <div class="cart-summary-line total">
+            <span>Total:</span>
+            <span id="cartTotal">₱0.00</span>
+        </div>
+
+        <button id="cartCheckoutBtn" onclick="proceedToCheckout()" class="btn-checkout">
+            Proceed to Checkout →
+        </button>
+    </div>
+</aside>
+
+<!-- =====================================================
+     CHECKOUT MODAL
+===================================================== -->
+<div id="checkoutModal" class="modal-overlay">
+    <div class="modal-box large">
+        <div class="modal-header">
+            <h3>Complete Your Order</h3>
+            <button onclick="closeModal('checkoutModal')" class="modal-close">&times;</button>
+        </div>
+        <form onsubmit="handlePlaceOrder(event)">
+            <div class="modal-body">
+                <div style="display:grid; grid-template-columns: 1.2fr 1fr; gap: 25px;">
+                    <div>
+                        <h4 style="font-size:15px; font-weight:800; margin-bottom:12px; color:#222;">
+                            📍 Delivery & Contact Information
+                        </h4>
+                        <div class="form-group">
+                            <label>Full Name *</label>
+                            <input type="text" id="checkoutName" required class="form-control" placeholder="Juan Dela Cruz">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Email Address *</label>
+                                <input type="email" id="checkoutEmail" required class="form-control" placeholder="juan@example.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Mobile Phone *</label>
+                                <input type="text" id="checkoutPhone" required class="form-control" placeholder="0912-345-6789">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Complete Delivery Address *</label>
+                            <textarea id="checkoutAddress" required rows="2" class="form-control" placeholder="House/Unit #, Street, Barangay, City"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Special Instructions (Optional)</label>
+                            <input type="text" id="checkoutNotes" class="form-control" placeholder="e.g. Extra spicy sauce, deliver to gate">
+                        </div>
+                        <div class="form-group">
+                            <label>Payment Method *</label>
+                            <select id="checkoutPaymentMethod" class="form-control">
+                                <option value="cash_on_delivery">💵 Cash on Delivery (COD)</option>
+                                <option value="gcash">📱 GCash (Pay on delivery or scan QR)</option>
+                                <option value="maya">💳 Maya (Scan QR or direct transfer)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Order Summary Side -->
+                    <div style="background:#faf6f3; padding:20px; border-radius:10px; border:1px solid #ebdcd0;">
+                        <h4 style="font-size:15px; font-weight:800; margin-bottom:12px; color:#222;">
+                            🛍️ Order Summary
+                        </h4>
+                        <div id="checkoutItemsSummary">
+                            <!-- Populated dynamically -->
+                        </div>
+                        <div style="margin-top:20px; background:#fff; padding:12px; border-radius:8px; border:1px solid #ebdcd0; font-size:12px; color:#666;">
+                            ℹ️ Your order will be confirmed immediately and routed to the kitchen for hot grilling.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="closeModal('checkoutModal')" class="btn-secondary" style="border:none; cursor:pointer;">Cancel</button>
+                <button type="submit" class="btn-primary" style="border:none; cursor:pointer;">Confirm & Place Order 🔥</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- =====================================================
+     AUTH MODAL (LOGIN / REGISTER)
+===================================================== -->
+<div id="authModal" class="modal-overlay">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h3 id="authModalTitle">Welcome to BBQ House</h3>
+            <button onclick="closeModal('authModal')" class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+            <!-- Tabs -->
+            <div style="display:flex; border-bottom:2px solid #eee; margin-bottom:20px;">
+                <button type="button" id="authTabLogin" onclick="showAuthTab('login')" style="flex:1; padding:10px; background:none; border:none; font-weight:800; color:#ff6b00; border-bottom:3px solid #ff6b00; cursor:pointer;">
+                    Sign In
+                </button>
+                <button type="button" id="authTabRegister" onclick="showAuthTab('register')" style="flex:1; padding:10px; background:none; border:none; font-weight:700; color:#888; border-bottom:3px solid transparent; cursor:pointer;">
+                    Create Account
+                </button>
+            </div>
+
+            <!-- Quick Demo Login Helpers -->
+            <div style="background:#fff7ee; border:1px dashed #ffb366; padding:10px 14px; border-radius:8px; margin-bottom:18px; font-size:13px; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-weight:700; color:#b24700;">🚀 Quick Demo:</span>
+                <div style="display:flex; gap:6px;">
+                    <button type="button" onclick="quickFillLogin('customer')" style="background:#fff; border:1px solid #ffb366; padding:4px 8px; border-radius:4px; font-size:11px; font-weight:700; cursor:pointer;">👤 Customer</button>
+                    <button type="button" onclick="quickFillLogin('admin')" style="background:#ff6b00; color:#fff; border:none; padding:4px 8px; border-radius:4px; font-size:11px; font-weight:700; cursor:pointer;">👑 Admin</button>
+                </div>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="loginEmail" required class="form-control" placeholder="admin@bbqhouse.com">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPassword" required class="form-control" placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn-primary" style="width:100%; border:none; cursor:pointer; padding:12px; margin-top:10px;">
+                    Sign In →
+                </button>
+            </form>
+
+            <!-- Register Form -->
+            <form id="registerForm" onsubmit="handleRegister(event)" style="display:none;">
+                <div class="form-group">
+                    <label>Full Name *</label>
+                    <input type="text" id="regName" required class="form-control" placeholder="Juan Dela Cruz">
+                </div>
+                <div class="form-group">
+                    <label>Email Address *</label>
+                    <input type="email" id="regEmail" required class="form-control" placeholder="juan@example.com">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="text" id="regPhone" class="form-control" placeholder="0912-345-6789">
+                    </div>
+                    <div class="form-group">
+                        <label>Account Type</label>
+                        <select id="regRole" class="form-control">
+                            <option value="customer">Customer</option>
+                            <option value="admin">Store Admin</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Delivery Address</label>
+                    <input type="text" id="regAddress" class="form-control" placeholder="Street, Barangay, City">
+                </div>
+                <div class="form-group">
+                    <label>Password *</label>
+                    <input type="password" id="regPassword" required minlength="6" class="form-control" placeholder="At least 6 characters">
+                </div>
+                <button type="submit" class="btn-primary" style="width:100%; border:none; cursor:pointer; padding:12px; margin-top:10px;">
+                    Create Account →
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- =====================================================
+     PRODUCT QUICK VIEW MODAL
+===================================================== -->
+<div id="productQuickViewModal" class="modal-overlay">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h3 id="quickViewTitle">Product Details</h3>
+            <button onclick="closeModal('productQuickViewModal')" class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body" style="text-align:center;">
+            <img id="quickViewImg" src="images/products/pork-bbq.jpg" style="width:100%; height:250px; object-fit:cover; border-radius:10px; margin-bottom:15px;">
+            <span id="quickViewCategory" style="font-size:12px; font-weight:800; color:#ff6b00; text-transform:uppercase;">Category</span>
+            <p id="quickViewDesc" style="color:#666; font-size:14px; margin: 10px 0 15px;"></p>
+            <div style="display:flex; justify-content:center; align-items:center; gap:20px;">
+                <span id="quickViewPrice" style="font-size:24px; font-weight:800; color:#ff6b00;">₱0.00</span>
+                <span id="quickViewStock" style="font-size:13px; font-weight:700; color:#10b981;">Stock</span>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" onclick="closeModal('productQuickViewModal')" class="btn-secondary" style="border:none; cursor:pointer;">Close</button>
+            <button type="button" id="quickViewAddBtn" class="btn-primary" style="border:none; cursor:pointer;">Add To Order +</button>
+        </div>
+    </div>
+</div>
+
+<!-- =====================================================
+     ADMIN ADD / EDIT PRODUCT MODAL
+===================================================== -->
+<div id="adminProductModal" class="modal-overlay">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h3 id="adminProductModalTitle">Add New Product</h3>
+            <button onclick="closeModal('adminProductModal')" class="modal-close">&times;</button>
+        </div>
+        <form onsubmit="handleAdminSaveProduct(event)">
+            <input type="hidden" id="adminProductId">
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Product Name *</label>
+                    <input type="text" id="adminProductName" required class="form-control" placeholder="e.g. Sizzling Sisig BBQ">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Category *</label>
+                        <select id="adminProductCategory" required class="form-control">
+                            <!-- Populated dynamically -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Price (₱) *</label>
+                        <input type="number" id="adminProductPrice" required step="0.5" class="form-control" placeholder="99.00">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Stock Count *</label>
+                        <input type="number" id="adminProductStock" required class="form-control" placeholder="50">
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select id="adminProductStatus" class="form-control">
+                            <option value="available">Available</option>
+                            <option value="unavailable">Unavailable</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="adminProductDesc" rows="2" class="form-control" placeholder="Savory description of the grilled dish..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Image Path / URL</label>
+                    <input type="text" id="adminProductImage" class="form-control" placeholder="images/products/pork-bbq.jpg">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="closeModal('adminProductModal')" class="btn-secondary" style="border:none; cursor:pointer;">Cancel</button>
+                <button type="submit" class="btn-primary" style="border:none; cursor:pointer;">Save Product</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-column">
+            <h2>🔥 BBQ HOUSE</h2>
+            <p>Authentic, freshly grilled Filipino BBQ made with passion, quality spices, and our signature marinade.</p>
+        </div>
+
+        <div class="footer-column">
+            <h3>Quick Links</h3>
+            <a href="#home" onclick="switchView('home')">Home</a>
+            <a href="#menu" onclick="switchView('menu')">Menu</a>
+            <a href="javascript:void(0)" onclick="openCartDrawer()">Cart</a>
+            <a href="#orders" onclick="switchView('orders')">Order Tracker</a>
+            <a href="#admin" onclick="switchView('admin')">Admin Panel</a>
+        </div>
+
+        <div class="footer-column">
+            <h3>Contact Us</h3>
+            <p>📞 0912-345-6789</p>
+            <p>📧 order@bbqhouse.com</p>
+            <p>📍 Bohol, Philippines</p>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>© 2026 BBQ House. All Rights Reserved. Powered by Python Backend & Supabase Database.</p>
+    </div>
+</footer>
+
+<div id="toastContainer" class="toast-container"></div>
+
+<script>
+function showAuthTab(tab) {
+    const isLogin = tab === 'login';
+    document.getElementById('loginForm').style.display = isLogin ? 'block' : 'none';
+    document.getElementById('registerForm').style.display = isLogin ? 'none' : 'block';
+    
+    document.getElementById('authTabLogin').style.color = isLogin ? '#ff6b00' : '#888';
+    document.getElementById('authTabLogin').style.borderBottomColor = isLogin ? '#ff6b00' : 'transparent';
+    document.getElementById('authTabRegister').style.color = isLogin ? '#888' : '#ff6b00';
+    document.getElementById('authTabRegister').style.borderBottomColor = isLogin ? 'transparent' : '#ff6b00';
+}
+</script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
