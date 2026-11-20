@@ -57,6 +57,13 @@ class LoginRequest(BaseModel):
     email: str
     password: str
 
+class UserUpdateRequest(BaseModel):
+    name: Optional[str] = None
+    email: Optional[str] = None
+    password: Optional[str] = None
+    phone: Optional[str] = None
+    address: Optional[str] = None
+
 class CategoryCreateRequest(BaseModel):
     name: str
     description: Optional[str] = ""
@@ -215,6 +222,14 @@ def login(req: LoginRequest):
     if not user:
         raise HTTPException(status_code=401, detail="Invalid email or password.")
     return {"message": "Login successful", "user": user}
+
+@app.put("/api/auth/users/{user_id}")
+def update_user_profile(user_id: int, req: UserUpdateRequest):
+    data = {k: v for k, v in req.dict().items() if v is not None}
+    updated = db.update_user(user_id, data)
+    if not updated:
+        raise HTTPException(status_code=404, detail="User not found")
+    return {"message": "Profile updated successfully", "user": updated}
 
 @app.get("/api/customers")
 def list_customers():

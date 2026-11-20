@@ -495,6 +495,41 @@ class DatabaseManager:
             return user_safe
         return None
 
+    def update_user(self, user_id: int, data: dict):
+        payload = {}
+        for k in ["name", "email", "phone", "address"]:
+            if k in data and data[k] is not None:
+                payload[k] = data[k]
+        if "password" in data and data["password"]:
+            payload["password"] = hash_password(data["password"])
+
+        if self.use_supabase:
+            try:
+                res = supabase_client.table("users").update(payload).eq("id", user_id).execute()
+                if res.data:
+                    u = res.data[0]
+                    u.pop("password", None)
+                    return u
+            except Exception as e:
+                print(f"[Supabase Error update_user] {e}")
+
+        conn = self.get_sqlite_conn()
+        cursor = conn.cursor()
+        fields = []
+        params = []
+        for k, v in payload.items():
+            fields.append(f"{k} = ?")
+            params.append(v)
+        if not fields:
+            conn.close()
+            return self.get_user_by_id(user_id)
+
+        params.append(user_id)
+        cursor.execute(f"UPDATE users SET {', '.join(fields)} WHERE id = ?", params)
+        conn.commit()
+        conn.close()
+        return self.get_user_by_id(user_id)
+
     def get_customers(self):
         if self.use_supabase:
             try:
@@ -518,11 +553,22 @@ class DatabaseManager:
             raise ValueError("Order must contain at least one item.")
 
         total_amount = float(order_data.get("total_amount", 0))
+        user_id = order_data.get("user_id")
 
         if self.use_supabase:
             try:
+                # Validate user_id exists in Supabase to prevent foreign key errors
+                valid_user_id = None
+                if user_id:
+                    try:
+                        u_chk = supabase_client.table("users").select("id").eq("id", int(user_id)).execute()
+                        if u_chk.data:
+                            valid_user_id = int(user_id)
+                    except Exception:
+                        valid_user_id = None
+
                 ord_res = supabase_client.table("orders").insert({
-                    "user_id": order_data.get("user_id"),
+                    "user_id": valid_user_id,
                     "customer_name": order_data.get("customer_name"),
                     "customer_email": order_data.get("customer_email"),
                     "customer_phone": order_data.get("customer_phone"),
